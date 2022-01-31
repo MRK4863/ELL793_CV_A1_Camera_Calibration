@@ -2,7 +2,7 @@ import numpy as np
 import cv2 as cv
 import glob
  
-chessboard_size = (24,17)
+chessboard_size = (15,12)
 frameSize = (1440, 1080)
 
 criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_EPS, 30, 0.001)
@@ -14,19 +14,22 @@ objp[:,:2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1,2
 objPoints = []
 imgPoints = []
 
-images = glob.glob("E:\GitHub\CV_Assignment_1\SAMPLE_IMAGES\*.png")
+images = glob.glob("E:\GitHub\CV_Assignment_1\TEST_IMAGES_2\*.jpg")
 for image in images:
     print(image)
     img = cv.imread(image)
     img_gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    # cv.imshow("gray_image", img_gray)
+    # cv.waitKey(1000)
 
     #Find the chess board corners
-    ret, corners = cv.findChessboardCorners(img_gray, chessboard_size, None)
+    ret, corners = cv.findChessboardCorners(img_gray, chessboard_size, cv.CALIB_CB_ADAPTIVE_THRESH + cv.CALIB_CB_FAST_CHECK + cv.CALIB_CB_NORMALIZE_IMAGE)
+    print("ret val = ", ret)
     
     if ret == True:
         objPoints.append(objp)
         corners2 = cv.cornerSubPix(img_gray, corners, (11, 11), (-1, -1), criteria)
-        imgPoints.append(corners)
+        imgPoints.append(corners2)
 
         cv.drawChessboardCorners(img, chessboard_size, corners2, ret)
         cv.imshow('img', img)
@@ -53,3 +56,4 @@ for i in range(len(objPoints)):
     
 print("\ntotal error: {}".format(mean_error/len(objPoints)))
 
+print(len(objPoints))
