@@ -14,7 +14,7 @@ objp[:,:2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1,2
 objPoints = []
 imgPoints = []
 
-images = glob.glob("E:\GitHub\CV_Assignment_1\TEST_IMAGES_3\*.jpg")
+images = glob.glob("E:\GitHub\CV_Assignment_1\TEST_DATA\*.jpg")
 for image in images:
     print(image)
     img = cv.imread(image)

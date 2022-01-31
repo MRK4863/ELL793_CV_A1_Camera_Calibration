@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9cb474e-187f-4837-b5d1-1d97f7c5fded" name="Changes" comment="Commit test dataset and calib modification">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/camera_calib_python.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera_calib_python.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
