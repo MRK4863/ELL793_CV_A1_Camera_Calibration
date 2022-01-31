@@ -16,7 +16,7 @@ criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_EPS, 30, 0.001)
 # objPoints = []
 # imgPoints = []
 
-image = "E:\GitHub\CV_Assignment_1\TEST_IMAGES_2\image (1).jpg"
+image = "E:\GitHub\CV_Assignment_1\TEST_IMAGES_3\image (1).jpg"
 
 print(image)
 img = cv.imread(image)

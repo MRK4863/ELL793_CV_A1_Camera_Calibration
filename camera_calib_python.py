@@ -2,7 +2,7 @@ import numpy as np
 import cv2 as cv
 import glob
  
-chessboard_size = (15,12)
+chessboard_size = (16,12)
 frameSize = (1440, 1080)
 
 criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_EPS, 30, 0.001)
@@ -14,7 +14,7 @@ objp[:,:2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1,2
 objPoints = []
 imgPoints = []
 
-images = glob.glob("E:\GitHub\CV_Assignment_1\TEST_IMAGES_2\*.jpg")
+images = glob.glob("E:\GitHub\CV_Assignment_1\TEST_IMAGES_3\*.jpg")
 for image in images:
     print(image)
     img = cv.imread(image)
