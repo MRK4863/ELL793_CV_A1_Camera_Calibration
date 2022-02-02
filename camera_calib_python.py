@@ -1,6 +1,7 @@
 import numpy as np
 import cv2 as cv
 import glob
+import pandas as pd
  
 chessboard_size = (24,17)
 frameSize = (1440, 1080)
@@ -13,6 +14,9 @@ objp[:,:2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1,2
 
 objPoints = []
 imgPoints = []
+
+data = pd.read_excel("E:\\GitHub\\CV_Assignment_1\\dataset.xlsx")
+print(data)
 
 images = glob.glob("E:\GitHub\CV_Assignment_1\SAMPLE_IMAGES\*.png")
 for image in images:
