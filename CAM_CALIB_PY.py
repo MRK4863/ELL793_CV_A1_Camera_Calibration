@@ -47,22 +47,17 @@ def Normalization(nd, x):
     x = np.asarray(x)
     # print(x)
 
-    # CALCULATING MEAN AND STANDARD DEVIATION
+    # CALCULATING centroid and mean distance from centroid
     m = np.mean(x, 0)
+    dist = np.mean(np.sqrt(np.sum(np.square(x - m))))
 
     # NORMALIZATION MATRIX FOR WORLD POINTS(3D) AND IMAGE-PIXEL POINTS(2D)
     if nd == 2:
-        A = np.array([[1, 0, -m[0]], [0, 1, -m[1]], [0, 0, 1]])
-        dist = np.mean(np.sqrt(np.sum(np.square(x - m))))
         s2D = np.sqrt(2) / dist
-        # print("mean = ", m)
-        # print("scale = ", s2D)
-
-        S1 = np.array([[s2D, 0, 0], [0, s2D, 0], [0, 0, 1]])
-        Tr = np.matmul(S1, A)
+        Tr = np.diag([s2D, s2D, 1])
+        Tr[0:2, 2] = -m * s2D
 
     else:
-        dist = np.mean(np.sqrt(np.sum(np.square(x - m))))
         s3D = np.sqrt(3) / dist
         Tr = np.diag([s3D, s3D, s3D, 1])
         Tr[0:3, 3] = -m * s3D
@@ -71,7 +66,32 @@ def Normalization(nd, x):
     x = x[0:nd, :].T
 
     return Tr, x
+def Normalization(nd, x):
+    # CONVERTING TO NUMPY ARRAY
+    x = np.asarray(x)
+    # print(x)
 
+    # CALCULATING centroid and mean distance from centroid
+    m = np.mean(x, 0)
+    dist = np.mean(np.sqrt(np.sum(np.square(x - m))))
+
+    # NORMALIZATION MATRIX FOR WORLD POINTS(3D) AND IMAGE-PIXEL POINTS(2D)
+    if nd == 2:
+        s2D = np.sqrt(2) / dist
+        Tr = np.diag([s2D, s2D, 1])
+        Tr[0:2, 2] = -m * s2D
+
+    else:
+        s3D = np.sqrt(3) / dist
+        Tr = np.diag([s3D, s3D, s3D, 1])
+        Tr[0:3, 3] = -m * s3D
+
+    x = np.dot(Tr, np.concatenate((x.T, np.ones((1, x.shape[0])))))
+    x = x[0:nd, :].T
+
+    print("MEAN DISTANCE FROM CENTER : {}".format(np.mean(np.sqrt(np.sum(np.square(x))))))
+
+    return Tr, x
 
 def DLTcalib(nd, xyz, img_pt_):
     if (nd != 3):
