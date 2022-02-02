@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9cb474e-187f-4837-b5d1-1d97f7c5fded" name="Changes" comment="Commit test dataset and calib modification">
-      <change afterPath="$PROJECT_DIR$/CAM_CALIB_PY.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/camera_calib_python.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera_calib_python.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CAM_CALIB_PY.py" beforeDir="false" afterPath="$PROJECT_DIR$/CAM_CALIB_PY.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLT_CAM_CALIBRATION.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/DLT_CAM_CALIBRATION.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ESTIMATED_POINTS.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ESTIMATED_POINTS.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ORIGINAL_ESTIMATED_POINTS_COMPARED.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ORIGINAL_ESTIMATED_POINTS_COMPARED.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

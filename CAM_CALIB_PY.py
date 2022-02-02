@@ -43,22 +43,30 @@ def RQ_decomposition(P):
     return K, R, C
 
 def Normalization(nd, x):
-
     # CONVERTING TO NUMPY ARRAY
     x = np.asarray(x)
+    # print(x)
 
     # CALCULATING MEAN AND STANDARD DEVIATION
-    m, s = np.mean(x, 0), np.std(x)
-
-    print("mean = ", m, "std = ", s)
+    m = np.mean(x, 0)
 
     # NORMALIZATION MATRIX FOR WORLD POINTS(3D) AND IMAGE-PIXEL POINTS(2D)
     if nd == 2:
-        Tr = np.array([[s, 0, m[0]], [0, s, m[1]], [0, 0, 1]])
-    else:
-        Tr = np.array([[s, 0, 0, m[0]], [0, s, 0, m[1]], [0, 0, s, m[2]], [0, 0, 0, 1]])
+        A = np.array([[1, 0, -m[0]], [0, 1, -m[1]], [0, 0, 1]])
+        dist = np.mean(np.sqrt(np.sum(np.square(x - m))))
+        s2D = np.sqrt(2) / dist
+        # print("mean = ", m)
+        # print("scale = ", s2D)
 
-    Tr = np.linalg.inv(Tr)
+        S1 = np.array([[s2D, 0, 0], [0, s2D, 0], [0, 0, 1]])
+        Tr = np.matmul(S1, A)
+
+    else:
+        dist = np.mean(np.sqrt(np.sum(np.square(x - m))))
+        s3D = np.sqrt(3) / dist
+        Tr = np.diag([s3D, s3D, s3D, 1])
+        Tr[0:3, 3] = -m * s3D
+
     x = np.dot(Tr, np.concatenate((x.T, np.ones((1, x.shape[0])))))
     x = x[0:nd, :].T
 
