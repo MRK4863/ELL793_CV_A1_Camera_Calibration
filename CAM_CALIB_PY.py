@@ -21,14 +21,14 @@ def get_intrest_points():
     world_pts = []
     pixel_pts = []
 
-    for i in range(len(x)):
+    for i in range(9):
         world_pts.append([x[i], y[i], z[i]])
         pixel_pts.append([u[i], v[i]])
 
     print("DATA FRAME")
     print(data)
 
-    world_pts, pixel_pts = shuffle(world_pts, pixel_pts, random_state=0)
+    #world_pts, pixel_pts = shuffle(world_pts, pixel_pts, random_state=0)
 
     return world_pts, pixel_pts
 
@@ -70,9 +70,7 @@ def Normalization(nd, x):
     return Tr, x
 
 
-def DLTcalib(nd, xyz, img_pt_):
-    if (nd != 3):
-        raise ValueError('%dD DLT unsupported.' % (nd))
+def DLT_cam_calib(nd, xyz, img_pt_):
 
     # Converting all variables to numpy array
     xyz = np.asarray(xyz)
@@ -81,17 +79,6 @@ def DLTcalib(nd, xyz, img_pt_):
     n = xyz.shape[0]
 
     print("\n\nNUMBER OF POINTS: {}\n\n".format(n))
-    # Validating the parameters:
-    if img_pt_.shape[0] != n:
-        raise ValueError(
-            'Object (%d points) and image (%d points) have different number of points.' % (n, img_pt_.shape[0]))
-
-    if (xyz.shape[1] != 3):
-        raise ValueError('Incorrect number of coordinates (%d) for %dD DLT (it should be %d).' % (xyz.shape[1], nd, nd))
-
-    if (n < 6):
-        raise ValueError(
-            '%dD DLT requires at least %d calibration points. Only %d points were entered.' % (nd, 2 * nd, n))
 
     Txyz, xyzn = Normalization(nd, xyz)
     Timg_pt_, img_pt_n = Normalization(2, img_pt_)
@@ -117,12 +104,14 @@ def DLTcalib(nd, xyz, img_pt_):
     H = L.reshape(3, nd + 1)
 
     # Denormalization
-    H = np.dot(np.dot(np.linalg.pinv(Timg_pt_), H), Txyz)
+    H_temp = np.dot(np.linalg.pinv(Timg_pt_), H)
+    H = np.dot(H_temp, Txyz)
     H = H / H[-1, -1]
     L = H.flatten()
 
     # Mean error of the DLT (mean residual of the DLT transformation in units of camera coordinates):
-    img_pt_2 = np.dot(H, np.concatenate((xyz.T, np.ones((1, xyz.shape[0])))))
+    img_pt_homo = np.concatenate((xyz.T, np.ones((1, xyz.shape[0]))))
+    img_pt_2 = np.dot(H, img_pt_homo)
     img_pt_2 = img_pt_2 / img_pt_2[2, :]
 
     # Mean distance:
@@ -134,7 +123,7 @@ def DLTcalib(nd, xyz, img_pt_):
     for i in range(len(img_pt_2.T)):
         print("{}   <---->  {}".format(actual_pixels[i], projected_pts[i][0:2]))
 
-    err = np.sqrt(np.mean(np.sum((img_pt_2[0:2, :].T - img_pt_) ** 2, 1)))
+    err = np.sqrt(np.mean(np.sum(np.square((img_pt_2[0:2, :].T - img_pt_)), 1)))
 
     return L, err, projected_pts[:,0:2]
 
@@ -194,7 +183,7 @@ def draw_on_image(original_pts, estimated_pts):
 if __name__ == "__main__":
     xyz, img_pt_ = get_intrest_points()
     nd = 3
-    P, err, estimated_pts = DLTcalib(nd, xyz, img_pt_)
+    P, err, estimated_pts = DLT_cam_calib(nd, xyz, img_pt_)
     P = P.reshape(3,4)
 
     print('\n\nMatrix')
