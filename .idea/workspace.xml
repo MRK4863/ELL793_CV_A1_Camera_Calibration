@@ -5,6 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CAM_CALIB_PY.py" beforeDir="false" afterPath="$PROJECT_DIR$/CAM_CALIB_PY.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DLT_CAM_CALIBRATION.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/DLT_CAM_CALIBRATION.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ESTIMATED_POINTS.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ESTIMATED_POINTS.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ORIGINAL_ESTIMATED_POINTS_COMPARED.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ORIGINAL_ESTIMATED_POINTS_COMPARED.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ORIGINAL_INTEREST_POINTS.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ORIGINAL_INTEREST_POINTS.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/camera_calib_python.py" beforeDir="false" afterPath="$PROJECT_DIR$/camera_calib_python.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +48,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/CAM_CALIB_PY.py" />
   </component>
-  <component name="RunManager" selected="Python.CAM_CALIB_PY">
+  <component name="RunManager" selected="Python.camera_calib_python">
     <configuration name="CAM_CALIB_PY" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="CV_Assignment_1" />
       <option name="INTERPRETER_OPTIONS" value="" />

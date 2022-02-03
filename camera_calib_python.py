@@ -2,8 +2,19 @@ import numpy as np
 import cv2 as cv
 import glob
 import pandas as pd
- 
-chessboard_size = (24,17)
+np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+
+def pretty_print(x):
+    x_shape = x.shape
+    for i in range(x_shape[0]):
+        for j in range(x_shape[1]):
+            if (j==(x_shape[1]-1)):
+                print("{:.4f}".format(x[i][j]), end = "")
+            else:
+                print("{:.4f} & ".format(x[i][j]), end = "")
+        print('\\\\')
+
+chessboard_size = (16,12)
 frameSize = (1440, 1080)
 
 criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_EPS, 30, 0.001)
@@ -15,10 +26,8 @@ objp[:,:2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1,2
 objPoints = []
 imgPoints = []
 
-data = pd.read_excel("E:\\GitHub\\CV_Assignment_1\\dataset.xlsx")
-print(data)
 
-images = glob.glob("E:\GitHub\CV_Assignment_1\SAMPLE_IMAGES\*.png")
+images = glob.glob("E:\GitHub\CV_Assignment_1\TEST_DATA\*.jpg")
 for image in images:
     print(image)
     img = cv.imread(image)
@@ -45,7 +54,11 @@ ret, cameraMatrix, dist, rvecs, tvecs = cv.calibrateCamera(objPoints, imgPoints,
 
 print("Camera calibrated: ", ret)
 print("\nCamera Matrix: \n", cameraMatrix)
+pretty_print(cameraMatrix)
+
 print("\nDistortion parameters: \n", dist)
+pretty_print(dist)
+
 print("\nRotation parameters: \n", rvecs)
 print("\nTranslation parameters: \n", tvecs)
 

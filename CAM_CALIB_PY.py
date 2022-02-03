@@ -4,6 +4,8 @@ from scipy import linalg
 from sklearn.utils import shuffle
 import cv2 as cv
 
+np.set_printoptions(formatter={'float': lambda x: "{0:0.3f}".format(x)})
+
 def get_intrest_points():
     # WORLD CO-ORDINATES
     data = pd.read_excel("E:/GitHub/CV_Assignment_1/dataset.xlsx")
@@ -66,32 +68,7 @@ def Normalization(nd, x):
     x = x[0:nd, :].T
 
     return Tr, x
-def Normalization(nd, x):
-    # CONVERTING TO NUMPY ARRAY
-    x = np.asarray(x)
-    # print(x)
 
-    # CALCULATING centroid and mean distance from centroid
-    m = np.mean(x, 0)
-    dist = np.mean(np.sqrt(np.sum(np.square(x - m))))
-
-    # NORMALIZATION MATRIX FOR WORLD POINTS(3D) AND IMAGE-PIXEL POINTS(2D)
-    if nd == 2:
-        s2D = np.sqrt(2) / dist
-        Tr = np.diag([s2D, s2D, 1])
-        Tr[0:2, 2] = -m * s2D
-
-    else:
-        s3D = np.sqrt(3) / dist
-        Tr = np.diag([s3D, s3D, s3D, 1])
-        Tr[0:3, 3] = -m * s3D
-
-    x = np.dot(Tr, np.concatenate((x.T, np.ones((1, x.shape[0])))))
-    x = x[0:nd, :].T
-
-    print("MEAN DISTANCE FROM CENTER : {}".format(np.mean(np.sqrt(np.sum(np.square(x))))))
-
-    return Tr, x
 
 def DLTcalib(nd, xyz, img_pt_):
     if (nd != 3):
@@ -186,7 +163,7 @@ def draw_on_image(original_pts, estimated_pts):
 
     for i in original_pts:
         center = (i[0], i[1])
-        radius = 5
+        radius = 10
         color_of_marker = (0,0,255)
         cv.circle(img_org, center, radius,color_of_marker,-1)
     cv.imshow('original image', img_org)
@@ -196,7 +173,7 @@ def draw_on_image(original_pts, estimated_pts):
     for i in estimated_pts:
         center = (int(np.rint(i[0])), int(np.rint(i[1])))
         #print(center)
-        radius = 5
+        radius = 10
         color_of_marker = (0,255,0)
         cv.circle(img_est, center, radius,color_of_marker, -1)
     cv.imshow('original image', img_est)
@@ -228,5 +205,7 @@ if __name__ == "__main__":
 
     print("\n\nCAMERA PARAMETERS: ")
     camera_param(P.reshape(3,4))
+
+    print(P.view())
 
     draw_on_image(img_pt_,estimated_pts)
